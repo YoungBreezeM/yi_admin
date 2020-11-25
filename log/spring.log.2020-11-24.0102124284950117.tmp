@@ -1,0 +1,19 @@
+2020-11-25 21:13:53.234  WARN 1262777 --- [http-nio-8082-exec-7] o.s.web.servlet.PageNotFound             : No mapping for GET /wx/static/pg.png
+2020-11-25 21:50:43.721  INFO 1262777 --- [http-nio-8082-exec-9] com.fw.core.utils.TokenUtil              : 认证通过
+2020-11-25 21:50:43.723  INFO 1262777 --- [http-nio-8082-exec-9] com.fw.core.utils.TokenUtil              : token:{"avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/jMoFTjroCovNkZcia3eRLU3fnlMgRDEtdAlcHoNGsEcxqCnp7mXricy6xIkqlRs4QoTcxeiabfy9e8hRFvQ6xUJug/132","id":24,"integral":91,"nickName":"风中微笑","openId":"oj9Q-5bLVwSSiZey85-Hb_cptx6c","status":true}
+2020-11-25 21:50:43.723  INFO 1262777 --- [http-nio-8082-exec-9] com.fw.core.utils.TokenUtil              : 过期时间：Wed Nov 25 23:50:41 CST 2020
+2020-11-25 21:50:43.748  INFO 1262777 --- [http-nio-8082-exec-3] com.fw.core.utils.TokenUtil              : 认证通过
+2020-11-25 21:50:43.748  INFO 1262777 --- [http-nio-8082-exec-3] com.fw.core.utils.TokenUtil              : token:{"avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/jMoFTjroCovNkZcia3eRLU3fnlMgRDEtdAlcHoNGsEcxqCnp7mXricy6xIkqlRs4QoTcxeiabfy9e8hRFvQ6xUJug/132","id":24,"integral":91,"nickName":"风中微笑","openId":"oj9Q-5bLVwSSiZey85-Hb_cptx6c","status":true}
+2020-11-25 21:50:43.748  INFO 1262777 --- [http-nio-8082-exec-3] com.fw.core.utils.TokenUtil              : 过期时间：Wed Nov 25 23:50:41 CST 2020
+2020-11-25 21:50:43.750  WARN 1262777 --- [http-nio-8082-exec-3] c.b.m.e.p.i.PaginationInnerInterceptor   : optimize this sql to a count sql has exception, sql:"SELECT  id,category_id,content,client_id,integral,watch,time  FROM questions 
+ 
+ WHERE  category_id=?
+
+
+
+
+
+
+
+  ORDER BY time DESC", exception:
+null

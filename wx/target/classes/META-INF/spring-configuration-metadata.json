@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.fw.wx.domain.FileProperties",
+      "sourceType": "com.fw.wx.domain.FileProperties"
+    },
+    {
+      "name": "wechat.mini",
+      "type": "com.fw.wx.domain.WxConfig",
+      "sourceType": "com.fw.wx.domain.WxConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.fw.wx.domain.FileProperties"
+    },
+    {
+      "name": "wechat.mini.aes-key",
+      "type": "java.lang.String",
+      "sourceType": "com.fw.wx.domain.WxConfig"
+    },
+    {
+      "name": "wechat.mini.app-id",
+      "type": "java.lang.String",
+      "sourceType": "com.fw.wx.domain.WxConfig"
+    },
+    {
+      "name": "wechat.mini.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.fw.wx.domain.WxConfig"
+    },
+    {
+      "name": "wechat.mini.token",
+      "type": "java.lang.String",
+      "sourceType": "com.fw.wx.domain.WxConfig"
+    }
+  ],
+  "hints": []
+}

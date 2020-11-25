@@ -1,0 +1,6 @@
+2020-11-23 22:27:22.994  INFO 641902 --- [main] com.fw.wx.WxApplicationTests             : Starting WxApplicationTests on yqf-CW65S with PID 641902 (started by yqf in /home/yqf/IdeaProjects/yj/wx)
+2020-11-23 22:27:23.004  INFO 641902 --- [main] com.fw.wx.WxApplicationTests             : No active profile set, falling back to default profiles: default
+2020-11-23 22:27:29.743  INFO 641902 --- [main] com.fw.wx.WxApplicationTests             : Started WxApplicationTests in 7.115 seconds (JVM running for 8.684)
+2020-11-23 22:27:30.794  INFO 641902 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2020-11-23 22:27:31.204  INFO 641902 --- [SpringContextShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2020-11-23 22:27:31.241  INFO 641902 --- [SpringContextShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed

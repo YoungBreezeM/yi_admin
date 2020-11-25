@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.fw.admin.entity.FileProperties",
+      "sourceType": "com.fw.admin.entity.FileProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.fw.admin.entity.FileProperties"
+    }
+  ],
+  "hints": []
+}
