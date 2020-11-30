@@ -3,6 +3,8 @@ package com.fw.core.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,9 +27,12 @@ public class Message implements Serializable {
 
     private Integer answerId;
 
-    private Integer clientId;
+    private Integer questionId;
 
-    private Integer status;
+    private Boolean status;
+
+    private Date time;
+
 
 
 }

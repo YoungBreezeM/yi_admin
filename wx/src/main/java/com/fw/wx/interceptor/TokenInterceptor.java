@@ -2,6 +2,7 @@ package com.fw.wx.interceptor;
 
 
 
+import com.alibaba.fastjson.JSON;
 import com.fw.core.domain.Result;
 import com.fw.core.domain.ResultType;
 import com.fw.core.utils.TokenUtil;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author yqf
@@ -51,7 +54,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         try {
             Result result = new Result(ResultType.TOKEN_VERIFY_FAIL);
-            response.getWriter().append(result.toString());
+            String userJson = JSON.toJSONString(result);
+            OutputStream out = response.getOutputStream();
+            out.write(userJson.getBytes(StandardCharsets.UTF_8));
+            out.flush();
             System.out.println("认证失败，未通过拦截器");
         } catch (Exception e) {
             return false;

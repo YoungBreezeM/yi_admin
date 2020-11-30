@@ -1,6 +1,7 @@
 package com.fw.wx.utils;
 
 
+
 import com.fw.core.exception.FileException;
 import com.fw.core.utils.DateUtil;
 import com.fw.wx.domain.FileProperties;
@@ -19,11 +20,14 @@ import java.nio.file.StandardCopyOption;
 /**
  * @author yqf
  */
-public class FileUtil {
-    
+public class FileUtil  {
 
-    private final Path fileStorageLocation;
+
+    private  Path fileStorageLocation;
     private String orgUrl;
+
+    public FileUtil() {
+    }
 
     public FileUtil(FileProperties fileProperties, String type) throws FileNotFoundException {
 
@@ -46,7 +50,7 @@ public class FileUtil {
         String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
         String[] split = originalFileName.split("\\.");
         DateUtil dateUtil = new DateUtil();
-        String fileName =split[0]+"_"+dateUtil.createTime("yyyy-MM-dd_HH-mm-ss")+"."+split[split.length-1];
+        String fileName =split[0]+"_"+dateUtil.createTime("yyyy-MM-dd_HH-mm-ss")+"."+split[1];
 
 
 
@@ -60,6 +64,28 @@ public class FileUtil {
 
         return orgUrl+"/"+fileName;
 
+    }
+
+    public Boolean deleteFile(String url){
+        try{
+            File classPath = new File(ResourceUtils.getURL("classpath:").getPath());
+            File file = new File(classPath.getAbsolutePath()+url);
+
+            if (!file.exists()) {
+                return true;
+            } else {
+                if(file.delete()){
+                    System.out.println(file.getName() + " 文件已被删除！");
+                    return true;
+                }else{
+                    System.out.println("文件删除失败！");
+                    return false;
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

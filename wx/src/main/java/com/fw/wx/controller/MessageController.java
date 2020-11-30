@@ -1,7 +1,5 @@
-package com.fw.wx;
+package com.fw.wx.controller;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,15 +7,26 @@ import com.fw.core.entity.*;
 import com.fw.core.service.*;
 import com.fw.wx.domain.MessageClient;
 import com.fw.wx.domain.QuestionClient;
-import org.junit.jupiter.api.Test;
+import com.fw.wx.domain.WxRes;
+import com.fw.wx.domain.WxResType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@SpringBootTest
-class WxApplicationTests {
+/**
+ * @author yqf
+ * @date 2020/11/30 下午2:42
+ */
+@RestController
+@RequestMapping("/message")
+public class MessageController {
     @Autowired
     private QuestionsService questionsService;
     @Autowired
@@ -29,10 +38,31 @@ class WxApplicationTests {
     @Autowired
     private AnswerService answerService;
 
-    @Test
-    void contextLoads() throws CloneNotSupportedException {
+    @GetMapping("/count/{clientId}")
+    public ResponseEntity<WxRes> getNewMessageCount(@PathVariable Integer clientId){
+        Questions questions = new Questions();questions.setClientId(clientId);
+        QueryWrapper<Questions> questionsQueryWrapper = new QueryWrapper<>();
+        questionsQueryWrapper.setEntity(questions);
+        List<Questions> list = questionsService.list(questionsQueryWrapper);
+        QueryWrapper<Message> messageQueryWrapper = new QueryWrapper<>();
+        int count = 0;
+        for (Questions questions1 : list) {
+            Message message = new Message();
+            message.setQuestionId(questions1.getId());
+            message.setStatus(false);
+            messageQueryWrapper.setEntity(message);
+            count += messageService.count(messageQueryWrapper);
+
+        }
+        Map<String,Integer> rs = new HashMap<>(10);rs.put("count",count);
+        return new ResponseEntity<>(new WxRes(WxResType.SUCCESS,rs), HttpStatus.OK);
+    }
+
+    @GetMapping("{clientId}")
+    public ResponseEntity<WxRes> getQuestionList(@PathVariable Integer clientId){
+
         Questions questions = new Questions();
-        questions.setClientId(24);
+        questions.setClientId(clientId);
         QueryWrapper<Questions> questionsQueryWrapper = new QueryWrapper<>();
         questionsQueryWrapper.setEntity(questions);
         List<Questions> list = questionsService.list(questionsQueryWrapper);
@@ -64,6 +94,7 @@ class WxApplicationTests {
         }
 
         oldMessage = oldMessage.stream().sorted(Comparator.comparing(Message::getTime).reversed()).collect(Collectors.toList());//根据创建时间倒排
+        newMessage = newMessage.stream().sorted(Comparator.comparing(Message::getTime).reversed()).collect(Collectors.toList());//根据创建时间倒排
 
         messages.clear();
         messages.addAll(newMessage);
@@ -92,7 +123,9 @@ class WxApplicationTests {
 
             messageClients.add(messageClient);
         }
-        System.out.println(messageClients);
+
+        return new ResponseEntity<>(new WxRes(WxResType.SUCCESS,messageClients),HttpStatus.OK);
     }
+
 
 }

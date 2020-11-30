@@ -2,9 +2,11 @@ package com.fw.wx.controller;
 
 import com.fw.core.entity.Answer;
 import com.fw.core.entity.Client;
+import com.fw.core.entity.Message;
 import com.fw.core.entity.Questions;
 import com.fw.core.service.AnswerService;
 import com.fw.core.service.ClientService;
+import com.fw.core.service.MessageService;
 import com.fw.core.service.QuestionsService;
 import com.fw.wx.domain.AnswerClient;
 import com.fw.wx.domain.WxRes;
@@ -36,6 +38,8 @@ public class AnswerController {
     private QuestionsService questionsService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private MessageService messageService;
 
     @PutMapping
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -55,6 +59,12 @@ public class AnswerController {
 
         questionsService.updateById(questions);
         clientService.updateById(client);
+        Message message = new Message();
+        message.setAnswerId(answer.getId());
+        message.setQuestionId(questions.getId());
+        message.setStatus(false);
+        message.setTime(new Date());
+        messageService.save(message);
         return new ResponseEntity<>(new WxRes(WxResType.SUCCESS), HttpStatus.OK);
     }
 }

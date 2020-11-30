@@ -108,6 +108,37 @@ public class QuestionsController {
         return new ResponseEntity<>(new WxRes(WxResType.FAIL), HttpStatus.OK);
     }
 
+    @PostMapping
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public ResponseEntity<WxRes> updateQuestion(@RequestBody QuestionClient questionClient){
+
+        System.out.println(questionClient);
+        Questions questions = questionClient.getQuestions();
+        Client client = questionClient.getClient();
+        List<String> imgList = questionClient.getImgList();
+        questions.setTime(new Date());
+        WxImages wxImages = new WxImages();
+
+        //更新客户端
+        clientService.updateById(client);
+
+        boolean update = questionsService.updateById(questions);
+        if(update){
+            wxImages.setQuestionId(questions.getId());
+            QueryWrapper<WxImages> wxImagesQueryWrapper = new QueryWrapper<>();
+            wxImagesQueryWrapper.setEntity(wxImages);
+            wxImagesService.remove(wxImagesQueryWrapper);
+
+            for (String url : imgList) {
+                wxImages.setUrl(url);
+                wxImages.setUploadTime(new Date());
+                wxImagesService.save(wxImages);
+            }
+
+            return new ResponseEntity<>(new WxRes(WxResType.SUCCESS), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new WxRes(WxResType.FAIL), HttpStatus.OK);
+    }
     @GetMapping("{questionId}")
     public ResponseEntity<WxRes> getQuestionAnswer(@PathVariable Integer questionId){
         Questions questions = questionsService.getById(questionId);
@@ -156,5 +187,16 @@ public class QuestionsController {
 
         return new ResponseEntity<>(new WxRes(WxResType.SUCCESS,questionAnswers),HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<WxRes> deleteQuestion(@PathVariable Integer id){
+        boolean b = questionsService.removeById(id);
+
+        if(b){
+            return new ResponseEntity<>(new WxRes(WxResType.SUCCESS),HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(new WxRes(WxResType.FAIL),HttpStatus.OK);
     }
 }
